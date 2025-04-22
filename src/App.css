@@ -1,0 +1,56 @@
+#root {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.container {
+    display: flex;
+    column-gap: 20px;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+}
+
+.display {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 300px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #020b5f;
+    border-radius: 20px;
+    background-color: rgba(2, 11, 95, 0.35);
+}
+
+.max-value {
+    width: 100%;
+    font-size: 32px;
+}
+
+.value {
+    font-size: 64px;
+}
+
+.progress-bar {
+    width: 100%;
+}
+
+.red {
+    color: red;
+}
+
+.button {
+    font-size: 32px;
+}
+
+.button-inc {
+    margin-right: 20px;
+}
