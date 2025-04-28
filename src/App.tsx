@@ -16,8 +16,8 @@ export type MinMaxType = {
 function App() {
     const DEFAULT_MIN_VALUE = 0;
     const DEFAULT_MAX_VALUE = 7;
-    const [value, setValue] = useState<number>(0);
     const [minMaxValue, setMinMaxValue] = useState<MinMaxType>({min: DEFAULT_MIN_VALUE, max: DEFAULT_MAX_VALUE});
+    const [value, setValue] = useState<number>(minMaxValue.min);
     const [isSetting, setIsSetting] = useState<boolean>(false)
     const handleButtonIncClick = () => {
         if (value < minMaxValue.max) {
@@ -26,16 +26,15 @@ function App() {
     }
     const handleButtonResClick = () => {
         setValue(0);
-        // setMaxValue(getRandomInt());
     }
 
   return (
     <div className={'container'}>
       <div className={'grid'}>
-        <SetPanel setIsSetting={setIsSetting}/>
+        <SetPanel setMinMaxValue={setMinMaxValue} setIsSetting={setIsSetting}/>
       </div>
       <div className={'grid'}>
-        <Display maxValue={minMaxValue} value={value}/>
+        <Display minMaxValue={minMaxValue} value={value}/>
         <Button className={'button button-inc'} title={'Inc'} onClickHandler={handleButtonIncClick} disabled={!(value < minMaxValue.max)}/>
         <Button className={'button'} title={'Res'} onClickHandler={handleButtonResClick} disabled={value === minMaxValue.min}/>
       </div>

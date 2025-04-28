@@ -11,7 +11,6 @@ const Display = ({minMaxValue, value}: DisplayPropsType) => {
         <div className={'display'}>
             <span className={'max-value'}>Max value: {minMaxValue.max}</span>
             <span className={`value ${value === minMaxValue.max ? 'red' : ''}`}>{value}</span>
-            {/*<progress className={'progress-bar'} value={value} max={maxValue}></progress>*/}
         </div>
     );
 };
