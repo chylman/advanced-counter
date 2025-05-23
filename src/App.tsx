@@ -1,42 +1,53 @@
 import './App.css'
-import Display from "./components/Display.tsx";
-import {Button} from "./components/Button.tsx";
-import {useState} from "react";
-import {SetPanel} from "./components/SetPanel.tsx";
+import Display from './components/Display.tsx'
+import { Button } from './components/Button.tsx'
+import { useState } from 'react'
+import { SetPanel } from './components/SetPanel.tsx'
 
-function getRandomInt() {
-    return Math.floor(Math.random() * 10) + 1;
-}
-
-export type MinMaxType = {
+export type Counter = {
   min: number
   max: number
+  value: number
+  isSetting: boolean
+}
+
+const initialState = {
+  min: 0,
+  max: 7,
+  value: 0,
+  isSetting: false,
 }
 
 function App() {
-    const DEFAULT_MIN_VALUE = 0;
-    const DEFAULT_MAX_VALUE = 7;
-    const [minMaxValue, setMinMaxValue] = useState<MinMaxType>({min: DEFAULT_MIN_VALUE, max: DEFAULT_MAX_VALUE});
-    const [value, setValue] = useState<number>(minMaxValue.min);
-    const [isSetting, setIsSetting] = useState<boolean>(false)
-    const handleButtonIncClick = () => {
-        if (value < minMaxValue.max) {
-            setValue(value + 1)
-        }
+  const [counter, setCounter] = useState<Counter>(initialState)
+  const handleButtonIncClick = () => {
+    if (counter.value < counter.max) {
+      setCounter({ ...counter, value: ++counter.value })
     }
-    const handleButtonResClick = () => {
-        setValue(0);
-    }
+  }
+  const handleButtonResClick = () => {
+    setCounter({ ...counter, value: 0 })
+  }
 
   return (
     <div className={'container'}>
       <div className={'grid'}>
-        <SetPanel setMinMaxValue={setMinMaxValue} setIsSetting={setIsSetting}/>
+        <SetPanel setCounter={setCounter} counter={counter} />
       </div>
       <div className={'grid'}>
-        <Display minMaxValue={minMaxValue} value={value}/>
-        <Button className={'button button-inc'} title={'Inc'} onClickHandler={handleButtonIncClick} disabled={!(value < minMaxValue.max)}/>
-        <Button className={'button'} title={'Res'} onClickHandler={handleButtonResClick} disabled={value === minMaxValue.min}/>
+        <Display counter={counter} />
+        <Button
+          className={'button button-inc'}
+          title={'Inc'}
+          onClickHandler={handleButtonIncClick}
+          disabled={!(counter.value < counter.max)}
+        />
+        <Button
+          className={'button'}
+          title={'Res'}
+          onClickHandler={handleButtonResClick}
+          disabled={counter.value === counter.min}
+        />
       </div>
     </div>
   )

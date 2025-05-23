@@ -1,18 +1,22 @@
-import React from 'react';
-import {MinMaxType} from "../App.tsx";
+import React from 'react'
+import { Counter } from '../App.tsx'
 
 type DisplayPropsType = {
-    minMaxValue: MinMaxType
-    value: number
+  counter: Counter
 }
 
-const Display = ({minMaxValue, value}: DisplayPropsType) => {
-    return (
-        <div className={'display'}>
-            <span className={'max-value'}>Max value: {minMaxValue.max}</span>
-            <span className={`value ${value === minMaxValue.max ? 'red' : ''}`}>{value}</span>
-        </div>
-    );
-};
+const Display = ({ counter }: DisplayPropsType) => {
+  return (
+    <div className={'display'}>
+      {counter.isSetting && <span className={'setting-message'}>Press set for continue</span>}
+      {!counter.isSetting && (
+        <>
+          <span className={'max-value'}>Max value: {counter.max}</span>
+          <span className={`value ${counter.value === counter.max ? 'red' : ''}`}>{counter.value}</span>
+        </>
+      )}
+    </div>
+  )
+}
 
-export default Display;
+export default Display

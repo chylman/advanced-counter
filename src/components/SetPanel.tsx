@@ -1,27 +1,53 @@
-import React, {useState} from 'react';
-import {ControledInput} from "./ControledInput.tsx";
-import {Button} from "./Button.tsx";
-import {MinMaxType} from "../App.tsx";
+import React, { ChangeEvent, useState } from 'react'
+import { ControledInput } from './ControledInput.tsx'
+import { Button } from './Button.tsx'
+import { Counter } from '../App.tsx'
 
 type SetPanelPropsType = {
-  setIsSetting: (boolean) => void
-  setMinMaxValue: ({}: MinMaxType) => void
+  setCounter: (counter: Counter) => any
+  counter: Counter
 }
 
-export const SetPanel: React.FC = ({setIsSetting, setMinMaxValue}: SetPanelPropsType) => {
-  const [min, setMin] = useState<number>(0)
-  const [max, setMax] = useState<number>(0)
-
+export const SetPanel: React.FC = ({ setCounter, counter }: SetPanelPropsType) => {
   const setButtonOnClickHandler = () => {
-    setMinMaxValue({min, max})
-    setIsSetting(false)
+    setCounter({ ...counter, isSetting: false })
+  }
+
+  const changeMinValue = () => {
+    if (counter.min > counter.max) {
+      setCounter({ ...counter, min: counter.min, max: counter.min, value: counter.min, isSetting: true })
+    } else setCounter?.({ ...counter, min: counter.min, value: counter.min, isSetting: true })
+  }
+
+  const changeMaxValue = (e) => {
+    setCounter({ ...counter, ['max']: +e.currentTarget.value, isSetting: true })
+  }
+
+  const onChangeHandler = (name: string, value: string) => {
+    setCounter({ ...counter, [name]: value })
   }
 
   return (
     <div className={'set-panel'}>
-      <ControledInput label={'max value: '} setMax={setMax} setIsSetting={setIsSetting}/>
-      <ControledInput label={'start value: '} setMin={setMin} setIsSetting={setIsSetting}/>
-      <Button title={'Set'} onClickHandler={setButtonOnClickHandler}/>
+      <ControledInput
+        name={'max'}
+        label={'max value: '}
+        setCounter={setCounter}
+        counter={counter}
+        onBlurHandler={changeMaxValue}
+        value={counter.max}
+        onChangeHandler={(e) => onChangeHandler('max', e.currentTarget.value)}
+      />
+      <ControledInput
+        name={'min'}
+        label={'start value: '}
+        setCounter={setCounter}
+        counter={counter}
+        value={counter.min}
+        onChangeHandler={(e) => onChangeHandler('min', e.currentTarget.value)}
+        onBlurHandler={changeMinValue}
+      />
+      <Button title={'Set'} onClickHandler={setButtonOnClickHandler} />
     </div>
-  );
-};
+  )
+}
