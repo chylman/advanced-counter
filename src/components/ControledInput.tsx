@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, FocusEventHandler, useState } from 'react'
+import React, { ChangeEventHandler, FocusEventHandler } from 'react'
 import { v1 } from 'uuid'
 import { Counter } from '../App.tsx'
 
