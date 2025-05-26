@@ -1,5 +1,5 @@
 import React from 'react'
-import { Counter } from '../App.tsx'
+import { Counter } from '../app/App.tsx'
 
 type DisplayPropsType = {
   counter: Counter

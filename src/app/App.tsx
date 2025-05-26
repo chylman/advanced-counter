@@ -1,8 +1,11 @@
 import './App.css'
-import Display from './components/Display.tsx'
-import { Button } from './components/Button.tsx'
+import Display from '../components/Display.tsx'
+import { Button } from '../components/Button.tsx'
 import { useState } from 'react'
-import { SetPanel } from './components/SetPanel.tsx'
+import { SetPanel } from '../components/SetPanel.tsx'
+import { useAppDispatch, useAppSelector } from '../common/hooks'
+import { selectCounter } from '../features/model/counterSelector.ts'
+import { changeValueAC } from '../features/model/counterReducer.ts'
 
 export type Counter = {
   min: number
@@ -19,20 +22,21 @@ const initialState = {
 }
 
 function App() {
-  const [counter, setCounter] = useState<Counter>(initialState)
+  const counter = useAppSelector(selectCounter)
+  const dispatch = useAppDispatch()
   const handleButtonIncClick = () => {
     if (counter.value < counter.max) {
-      setCounter({ ...counter, value: ++counter.value })
+      dispatch(changeValueAC({ value: counter.value + 1 }))
     }
   }
   const handleButtonResClick = () => {
-    setCounter({ ...counter, value: 0 })
+    dispatch(changeValueAC({ value: 0 }))
   }
 
   return (
     <div className={'container'}>
       <div className={'grid'}>
-        <SetPanel setCounter={setCounter} counter={counter} />
+        <SetPanel counter={counter} />
       </div>
       <div className={'grid'}>
         <Display counter={counter} />
@@ -40,13 +44,13 @@ function App() {
           className={'button button-inc'}
           title={'Inc'}
           onClickHandler={handleButtonIncClick}
-          disabled={!(counter.value < counter.max)}
+          disabled={!(counter.value < counter.max) || counter.isSetting}
         />
         <Button
           className={'button'}
           title={'Res'}
           onClickHandler={handleButtonResClick}
-          disabled={counter.value === counter.min}
+          disabled={counter.value === counter.min || counter.isSetting}
         />
       </div>
     </div>

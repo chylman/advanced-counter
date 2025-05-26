@@ -1,31 +1,17 @@
-import React, { ChangeEventHandler, FocusEventHandler } from 'react'
+import { ChangeEventHandler, FocusEventHandler } from 'react'
 import { v1 } from 'uuid'
-import { Counter } from '../App.tsx'
 
-type ControledInputPropsType = {
+type PropsType = {
   label: string
-  setCounter: (counter: Counter) => void
-  counter: Counter
   name: string
   onBlurHandler: FocusEventHandler<HTMLInputElement>
   onChangeHandler: ChangeEventHandler<HTMLInputElement>
+  onFocusHandler: FocusEventHandler<HTMLInputElement>
   value: number
 }
 
-export const ControledInput: React.FC<ControledInputPropsType> = ({
-  label,
-  name,
-  setCounter,
-  counter,
-  onBlurHandler,
-  onChangeHandler,
-  value,
-}: ControledInputPropsType) => {
+export const ControledInput = ({ label, name, onBlurHandler, onChangeHandler, onFocusHandler, value }: PropsType) => {
   const id = v1()
-
-  const onFocusHandler = () => {
-    setCounter?.({ ...counter, isSetting: true })
-  }
 
   return (
     <fieldset>
